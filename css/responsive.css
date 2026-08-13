@@ -40,6 +40,11 @@
     grid-template-columns: 1fr 2.5fr;
   }
 }
+@media (max-width: 1050px) and (min-width: 821px) {
+  .nav-links {
+    gap: 1.2rem;
+  }
+}
 @media (max-width: 820px) {
   :root {
     --section-space: 68px;
@@ -189,7 +194,7 @@
     display: block;
     padding: 2rem;
   }
-  .contact-inner > div:not(.contact-copy) {
+  .contact-actions {
     margin-top: 1.5rem;
   }
   .contact .button {
@@ -200,12 +205,35 @@
   }
 }
 @media (max-width: 480px) {
+  .certification-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-email-link {
+    font-size: 0.78rem;
+  }
+  .contact-buttons {
+    grid-template-columns: 1fr;
+  }
   .hero-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .hero-actions .button:first-child {
     grid-column: 1 / -1;
+  }
+}
+@media (max-width: 480px) {
+  .certificate-modal {
+    padding: 0.75rem;
+  }
+  .certificate-dialog {
+    max-height: calc(100svh - 1.5rem);
+  }
+  .certificate-dialog-header {
+    align-items: flex-start;
+  }
+  .certificate-viewer img {
+    max-height: calc(100svh - 8rem);
   }
 }
 a:focus-visible,

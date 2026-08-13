@@ -87,6 +87,107 @@ stubbyTabs.forEach((tab, index) => {
   });
 });
 
+const certificateModal = document.querySelector("#certificate-modal");
+const certificateTitle = document.querySelector("#certificate-modal-title");
+const certificateImage = document.querySelector("#certificate-modal-image");
+const certificateClose = certificateModal?.querySelector(".certificate-close");
+const certificatePageRegions = [
+  document.querySelector(".site-header"),
+  document.querySelector("main"),
+  document.querySelector("footer"),
+].filter(Boolean);
+let certificateTrigger = null;
+
+const closeCertificate = () => {
+  if (!certificateModal || certificateModal.hidden) return;
+  certificateModal.hidden = true;
+  document.body.classList.remove("certificate-open");
+  certificatePageRegions.forEach((region) => region.removeAttribute("inert"));
+  certificateImage.removeAttribute("src");
+  certificateTrigger?.focus();
+  certificateTrigger = null;
+};
+
+document.querySelectorAll(".certificate-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    certificateTrigger = trigger;
+    certificateTitle.textContent = trigger.dataset.certificateTitle;
+    certificateImage.src = trigger.dataset.certificateSrc;
+    certificateImage.alt = trigger.dataset.certificateTitle;
+    certificateModal.hidden = false;
+    document.body.classList.add("certificate-open");
+    certificatePageRegions.forEach((region) => region.setAttribute("inert", ""));
+    certificateClose.focus();
+  });
+});
+
+certificateModal?.querySelectorAll("[data-certificate-close]").forEach((control) => {
+  control.addEventListener("click", closeCertificate);
+});
+
+certificateModal?.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeCertificate();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = [...certificateModal.querySelectorAll("button:not([disabled])")];
+  const first = focusable[0];
+  const last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+
+const copyEmailButton = document.querySelector(".copy-email");
+const copyEmailIcon = copyEmailButton?.querySelector(".copy-icon");
+const copyEmailSuccessIcon = copyEmailButton?.querySelector(".copy-success-icon");
+const copyEmailStatus = copyEmailButton?.querySelector(".copy-status");
+let copyEmailFeedback;
+
+const copyEmailFallback = (email) => {
+  const input = document.createElement("textarea");
+  input.value = email;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.append(input);
+  input.select();
+  const copied = document.execCommand("copy");
+  input.remove();
+  return copied;
+};
+
+copyEmailButton?.addEventListener("click", async () => {
+  const email = copyEmailButton.dataset.email;
+  let copied = false;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(email);
+      copied = true;
+    } else {
+      copied = copyEmailFallback(email);
+    }
+  } catch {
+    copied = copyEmailFallback(email);
+  }
+
+  clearTimeout(copyEmailFeedback);
+  copyEmailIcon.toggleAttribute("hidden", copied);
+  copyEmailSuccessIcon.toggleAttribute("hidden", !copied);
+  copyEmailStatus.textContent = copied ? "Email copied" : "Unable to copy email address";
+  copyEmailFeedback = setTimeout(() => {
+    copyEmailIcon.removeAttribute("hidden");
+    copyEmailSuccessIcon.setAttribute("hidden", "");
+    copyEmailStatus.textContent = "";
+  }, 2000);
+});
+
 const updateHeader = () => header.classList.toggle("scrolled", scrollY > 20);
 addEventListener("scroll", updateHeader, { passive: true });
 updateHeader();

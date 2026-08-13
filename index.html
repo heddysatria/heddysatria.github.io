@@ -156,7 +156,7 @@
             <p class="eyebrow">02 / Education</p>
             <h2>Education</h2>
           </div>
-          <div class="timeline">
+          <div class="timeline education-timeline">
             <article class="reveal current-entry" tabindex="0">
               <time>2025 — Present</time>
               <div>
@@ -170,7 +170,15 @@
                   <li>Cybersecurity &amp; Cloud Computing</li>
                   <li>Certificate in Data &amp; Analytics</li>
                   <li>SP Outstanding Talent Programme</li>
-                  <li>Director's Honour Roll AY2025/2026</li>
+                  <li class="credential-item">
+                    Director's Honour Roll AY2025/2026
+                    <button
+                      class="certificate-trigger"
+                      type="button"
+                      data-certificate-src="assets/credentials/directors-honour-roll.jpg"
+                      data-certificate-title="Director's Honour Roll Certificate of Commendation"
+                    >View certificate ↗</button>
+                  </li>
                 </ul>
                 <h4 class="distinction-title">Distinctions</h4>
                 <p class="distinctions">
@@ -178,13 +186,6 @@
                   Design for User Interaction · Persuasive Communication with
                   Data Storytelling · Programming for Data Science
                 </p>
-              </div>
-            </article>
-            <article class="reveal compact-entry" tabindex="0">
-              <time>2019 — 2021</time>
-              <div>
-                <h3>Temasek Polytechnic</h3>
-                <p>Earlier studies in Aviation Management</p>
               </div>
             </article>
           </div>
@@ -204,7 +205,15 @@
                 <h3>Singapore Army</h3>
                 <p>Inspection Assistant (Medic)</p>
                 <ul>
-                  <li>Qualified Medic / Emergency Medical Technician</li>
+                  <li class="credential-item">
+                    Qualified Medic / Emergency Medical Technician
+                    <button
+                      class="certificate-trigger"
+                      type="button"
+                      data-certificate-src="assets/credentials/emt-certificate.jpg"
+                      data-certificate-title="Emergency Medical Technician Course Certificate"
+                    >View certificate ↗</button>
+                  </li>
                   <li>Inspection and compliance support</li>
                   <li>Medical support</li>
                   <li>Operational discipline and teamwork</li>
@@ -313,6 +322,34 @@
                 academic dashboard work.</small
               >
             </article>
+          </div>
+          <div class="technical-certifications reveal">
+            <h3>Technical Certifications</h3>
+            <div class="certification-grid">
+              <article tabindex="0">
+                <h4>Data Manipulation with pandas</h4>
+                <p>DataCamp <span aria-hidden="true">·</span> Feb 2026</p>
+              </article>
+              <article tabindex="0">
+                <h4>Intermediate Python</h4>
+                <p>DataCamp <span aria-hidden="true">·</span> Feb 2026</p>
+              </article>
+              <article tabindex="0">
+                <h4>Python for Data Visualization (2019)</h4>
+                <p>LinkedIn Learning <span aria-hidden="true">·</span> Jun 2026</p>
+              </article>
+              <article tabindex="0">
+                <h4>JavaScript for Web Designers</h4>
+                <p>LinkedIn Learning <span aria-hidden="true">·</span> Sep 2025</p>
+              </article>
+            </div>
+            <a
+              class="certifications-link"
+              href="https://www.linkedin.com/in/heddysatria/details/certifications/"
+              target="_blank"
+              rel="noreferrer"
+              >View all certifications on LinkedIn ↗</a
+            >
           </div>
         </div>
       </section>
@@ -556,24 +593,70 @@
               software development.
             </p>
           </div>
-          <div>
-            <a
-              class="button primary"
-              href="https://sg.linkedin.com/in/heddysatria"
-              target="_blank"
-              rel="noreferrer"
-              >LinkedIn ↗</a
-            ><a
-              class="button secondary"
-              href="https://github.com/heddysatria"
-              target="_blank"
-              rel="noreferrer"
-              >GitHub ↗</a
-            >
+          <div class="contact-actions">
+            <div class="contact-buttons">
+              <a
+                class="button primary"
+                href="https://sg.linkedin.com/in/heddysatria"
+                target="_blank"
+                rel="noreferrer"
+                >LinkedIn ↗</a
+              ><a
+                class="button secondary"
+                href="https://github.com/heddysatria"
+                target="_blank"
+                rel="noreferrer"
+                >GitHub ↗</a
+              >
+            </div>
+            <div class="contact-email-control">
+              <a
+                class="contact-email-link"
+                href="mailto:16.heddysatria@gmail.com"
+              >
+                <span>Email:</span>
+                <strong>16.heddysatria@gmail.com</strong>
+              </a>
+              <button
+                class="copy-email"
+                type="button"
+                data-email="16.heddysatria@gmail.com"
+                aria-label="Copy email address"
+                title="Copy email address"
+              >
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="11" height="11" rx="2"></rect>
+                  <path d="M16 8V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1"></path>
+                </svg>
+                <svg class="copy-success-icon" viewBox="0 0 24 24" aria-hidden="true" hidden>
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+                <span class="sr-only copy-status" aria-live="polite"></span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
     </main>
+    <div class="certificate-modal" id="certificate-modal" hidden>
+      <div class="certificate-modal-backdrop" data-certificate-close></div>
+      <div
+        class="certificate-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="certificate-modal-title"
+      >
+        <div class="certificate-dialog-header">
+          <h2 id="certificate-modal-title"></h2>
+          <button class="certificate-close" type="button" data-certificate-close>
+            Close
+          </button>
+        </div>
+        <div class="certificate-viewer">
+          <img id="certificate-modal-image" alt="" />
+        </div>
+      </div>
+    </div>
     <footer>
       <div class="shell">
         <p>© <span id="year"></span> Heddy Satria. All rights reserved.</p>
